@@ -10,14 +10,30 @@
 		"Other"
 	],
 	"activationEvents": [
-		"onCommand:soundcloud-for-vs-code.helloWorld"
+		"*"
 	],
 	"main": "./out/extension.js",
 	"contributes": {
 		"commands": [
 			{
-				"command": "soundcloud-for-vs-code.helloWorld",
-				"title": "Hello World"
+				"command": "soundcloud-for-vs-code.play_pause_toggle",
+				"title": "Toggle Play/Pause"
+			},
+			{
+				"command": "soundcloud-for-vs-code.skip_next",
+				"title": "Skip Next Track"
+			},
+			{
+				"command": "soundcloud-for-vs-code.skip_back",
+				"title": "Skip Back Track"
+			},
+			{
+				"command": "soundcloud-for-vs-code.show_queue_menu",
+				"title": "Show Queue Menu"
+			},
+			{
+				"command": "soundcloud-for-vs-code.show_search_menu",
+				"title": "Show Search Menu"
 			}
 		]
 	},
