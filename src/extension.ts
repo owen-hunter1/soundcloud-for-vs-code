@@ -27,8 +27,9 @@ function newStatusBarItem(alignment:vscode.StatusBarAlignment, priority:number, 
 export function activate(context: vscode.ExtensionContext) {
 	console.log("Congratulations, your extension 'soundcloud-for-vs-code' is now active!");
 
-	//position
+	//position counter for the status bar item
 	let itemPosition = 0;
+	
 	//window item inititalizations
 	const searchButton: vscode.StatusBarItem = newStatusBarItem(vscode.StatusBarAlignment.Right, --itemPosition, "$(search-view-icon)", "search for songs", "soundcloud-for-vs-code.show_search_menu");
 	searchButton.show();
