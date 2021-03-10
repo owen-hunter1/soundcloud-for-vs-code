@@ -11,7 +11,6 @@ export class Track{
         this.trackID="";
         this.streamURL="";
     }
-    //path: string
 }
 
 export class TrackPlayer{
