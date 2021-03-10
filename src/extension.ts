@@ -1,6 +1,8 @@
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
+import {TrackPlayer} from "./trackplayer";
+import {SoundCloudRequest} from "./soundcloud_request";
 
 /**Creates status bar item
 *@param alignment align from left or right of status bar
@@ -21,16 +23,24 @@ function newStatusBarItem(alignment:vscode.StatusBarAlignment, priority:number, 
 	return statusBarItem;
 }
 
+function createQuickPickItemFromStringArray(strArr: Array<string>): Array<vscode.QuickPickItem>{
+	let qpiArr: Array<vscode.QuickPickItem> = [];
+	for(var i = 0; i < strArr.length; i++){
+		qpiArr.push({label:strArr[i]});
+	}
+	return qpiArr;
+}
+
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
-	console.log("Congratulations, your extension 'soundcloud-for-vs-code' is now active!");
 
 	//position counter for the status bar item
 	let itemPosition = 0;
-	
+
 	//window item inititalizations
+	//buttons
 	const searchButton: vscode.StatusBarItem = newStatusBarItem(vscode.StatusBarAlignment.Right, --itemPosition, "$(search-view-icon)", "search for songs", "soundcloud-for-vs-code.show_search_menu");
 	searchButton.show();
 	context.subscriptions.push(searchButton);
@@ -51,9 +61,21 @@ export function activate(context: vscode.ExtensionContext) {
 	queueButton.show();
 	context.subscriptions.push(queueButton);
 
+	//status bar text
 	const trackInfoText: vscode.StatusBarItem = newStatusBarItem(vscode.StatusBarAlignment.Right, --itemPosition, "Current Song - Current Artist", "Current Track");
 	trackInfoText.show();
 	context.subscriptions.push(trackInfoText);
+
+	//quick pick
+	const searchBox:vscode.QuickPick<vscode.QuickPickItem> = vscode.window.createQuickPick();
+	searchBox.ignoreFocusOut = true;
+	//todo: use onDidAccept method
+	searchBox.onDidChangeValue(()=>{
+		SoundCloudRequest.queryTrack(searchBox.value, (result: string[]) =>{
+			searchBox.items = createQuickPickItemFromStringArray(result);
+		});
+	});
+	context.subscriptions.push(searchBox);
 
 	//command initializations
 	context.subscriptions.push(vscode.commands.registerCommand("soundcloud-for-vs-code.play_pause_toggle", ()=>{
@@ -84,8 +106,7 @@ export function activate(context: vscode.ExtensionContext) {
 	}));
 
 	context.subscriptions.push(vscode.commands.registerCommand("soundcloud-for-vs-code.show_search_menu", ()=>{
-		//todo: add search functionality from search class
-		vscode.window.showInformationMessage("Searchbar");
+		searchBox.show();
 	}));
 
 }
