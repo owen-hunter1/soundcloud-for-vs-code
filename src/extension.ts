@@ -1,7 +1,7 @@
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
-import {TrackPlayer} from "./trackplayer";
+import {TrackPlayer, Track} from "./trackplayer";
 import {SoundCloudRequest} from "./soundcloud_request";
 
 /**Creates status bar item
@@ -21,6 +21,27 @@ function newStatusBarItem(alignment:vscode.StatusBarAlignment, priority:number, 
 	}
 	console.log("created status bar item");
 	return statusBarItem;
+}
+
+class QuickPickTrackItem implements vscode.QuickPickItem{
+	label: string;
+	description?: string | undefined;
+	detail?: string | undefined;
+	picked?: boolean | undefined;
+	alwaysShow?: boolean | undefined;
+	track: Track;
+	constructor(track: Track){
+		this.track = track;
+		this.label = track.title + " - " + track.artist;
+	}
+}
+
+function createQuickPickTrackItemFromTrackArray(trackArr: Array<Track>): Array<QuickPickTrackItem>{
+	let qpiArr: Array<QuickPickTrackItem> = [];
+	for(var i = 0; i < trackArr.length; i++){
+		qpiArr.push(new QuickPickTrackItem(trackArr[i]));
+	}
+	return qpiArr;
 }
 
 function createQuickPickItemFromStringArray(strArr: Array<string>): Array<vscode.QuickPickItem>{
@@ -69,9 +90,33 @@ export function activate(context: vscode.ExtensionContext) {
 	//quick pick
 	const searchBox:vscode.QuickPick<vscode.QuickPickItem> = vscode.window.createQuickPick();
 	searchBox.ignoreFocusOut = true;
-	//todo: use onDidAccept method
+	searchBox.placeholder = "search";
+	searchBox.onDidAccept(()=>{
+		searchBox.hide();
+		//vscode.window.showInformationMessage(searchBox.selectedItems[0].label);
+		SoundCloudRequest.getTrackFromQuery(searchBox.selectedItems[0].label, (tracks: Array<Track>)=>{
+			if(tracks.length > 0){
+				vscode.window.showQuickPick(createQuickPickTrackItemFromTrackArray(tracks)).then((value)=>{
+
+					if(value){
+						vscode.window.showInformationMessage(value?.track.title);
+						//SoundCloudRequest.downloadTrack("",()=>{
+							//todo: add track to player
+						//});
+					}
+				});
+			}else{
+				vscode.window.showInformationMessage("No results");
+			}
+		});
+		
+		
+	});
+
 	searchBox.onDidChangeValue(()=>{
 		SoundCloudRequest.queryTrack(searchBox.value, (result: string[]) =>{
+			//todo: create QuickPickTrackItem
+			result.unshift(searchBox.value.trim());
 			searchBox.items = createQuickPickItemFromStringArray(result);
 		});
 	});

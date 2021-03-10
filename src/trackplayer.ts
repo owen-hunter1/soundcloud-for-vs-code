@@ -1,8 +1,16 @@
-export interface Track{
-    title: string,
-    artist: string,
-    album: string,
-    trackID: number
+export class Track{
+    public title: string;
+    public artist: string;
+    public album: string;
+    public trackID: string;
+    public streamURL: string;
+    constructor(){
+        this.title="";
+        this.artist="";
+        this.album="";
+        this.trackID="";
+        this.streamURL="";
+    }
     //path: string
 }
 
