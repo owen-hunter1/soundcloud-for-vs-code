@@ -29,7 +29,7 @@ export class SoundCloudRequest{
     }
     //preforms the search for tracks matching keywords
     static getTrackFromQuery(query: string, callback: Function){
-        http.get("https://api-v2.soundcloud.com/search?q=" + query + "&query_urn=soundcloud%3Asearch-autocomplete%3A76a40be97b81410c8631f4b5755df845&facet=model&client_id=dmDh7QSlmGpzH9qQoH1YExYCGcyYeYYC&limit=10", (response: EventEmitter)=>{
+        http.get("https://api-v2.soundcloud.com/search?q=" + query + "&query_urn=soundcloud%3Asearch-autocomplete%3A76a40be97b81410c8631f4b5755df845&facet=model&client_id=dmDh7QSlmGpzH9qQoH1YExYCGcyYeYYC&limit=15", (response: EventEmitter)=>{
             var data = '';
             response.on("data", (chunk)=>{
                 data += chunk;
@@ -39,12 +39,17 @@ export class SoundCloudRequest{
                 var trackArr: Array<Track> = [];
                 for(var i = 0; i < jsonObj.collection.length; i++){
                     let track: Track = new Track();
-
-                    track.title = jsonObj.collection[i].title;
-                    track.artist = jsonObj.collection[i].user.username;
-                    track.trackID = jsonObj.collection[i].id;
-                    track.streamURL = jsonObj.collection[i].media.transcodings[0].url;
-                    trackArr.push(track);
+                    try{
+                        track.title = jsonObj.collection[i].title;
+                        if(Object.prototype.hasOwnProperty.call(jsonObj.collection[i], "user")){
+                            track.artist = jsonObj.collection[i].user.username;
+                        }
+                        track.trackID = jsonObj.collection[i].id;
+                        track.streamURL = jsonObj.collection[i].media.transcodings[0].url;
+                        trackArr.push(track);
+                    }catch(err){
+                        console.log(err);
+                    }
                 }
                 callback(trackArr);
             });

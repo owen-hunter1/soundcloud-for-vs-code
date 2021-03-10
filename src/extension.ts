@@ -52,7 +52,6 @@ function createQuickPickItemFromStringArray(strArr: Array<string>): Array<vscode
 	return qpiArr;
 }
 
-
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
@@ -96,8 +95,9 @@ export function activate(context: vscode.ExtensionContext) {
 		//vscode.window.showInformationMessage(searchBox.selectedItems[0].label);
 		SoundCloudRequest.getTrackFromQuery(searchBox.selectedItems[0].label, (tracks: Array<Track>)=>{
 			if(tracks.length > 0){
+				let output = vscode.window.createOutputChannel("sc4vsc");
+				output.append(tracks.length.toString());
 				vscode.window.showQuickPick(createQuickPickTrackItemFromTrackArray(tracks)).then((value)=>{
-
 					if(value){
 						vscode.window.showInformationMessage(value?.track.title);
 						//SoundCloudRequest.downloadTrack("",()=>{
@@ -109,13 +109,10 @@ export function activate(context: vscode.ExtensionContext) {
 				vscode.window.showInformationMessage("No results");
 			}
 		});
-		
-		
 	});
 
 	searchBox.onDidChangeValue(()=>{
 		SoundCloudRequest.queryTrack(searchBox.value, (result: string[]) =>{
-			//todo: create QuickPickTrackItem
 			result.unshift(searchBox.value.trim());
 			searchBox.items = createQuickPickItemFromStringArray(result);
 		});
