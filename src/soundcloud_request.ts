@@ -59,9 +59,9 @@ export class SoundCloudRequest{
         });
     }
 
-    static downloadTrack(trackID: string, callback: Function){
-        this.getStreamURL("652287209",(url: string)=>{
-            //todo: download stream url
+    static downloadTrack(track: Track, callback: Function){
+        this.getStreamURL(track.streamURL, ()=>{
+            
         });
     }
 
