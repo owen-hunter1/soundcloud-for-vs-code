@@ -1,8 +1,10 @@
 import EventEmitter = require('node:events');
+import { ClientRequest } from 'node:http';
 import * as vscode from 'vscode';
 import {Track, TrackPlayer} from "./trackplayer";
 
-var http = require("https");
+const http = require("https");
+const fs = require("fs");
 
 function displayConnectionError(err: string){
     vscode.window.showErrorMessage("unable to connect to soundcloud servers. Error message: \n" + err);
@@ -60,13 +62,40 @@ export class SoundCloudRequest{
     }
 
     static downloadTrack(track: Track, callback: Function){
-        this.getStreamURL(track.streamURL, ()=>{
-            
+        //holy shit this actually worked
+        //dont ask how
+        let output = vscode.window.createOutputChannel("sc4vsc");
+        this.getStreamURL(track.streamURL+"?client_id=dmDh7QSlmGpzH9qQoH1YExYCGcyYeYYC", (url: string)=>{
+            http.get(url, (response: EventEmitter)=>{
+                var data = '';
+                response.on("data", (chunk)=>{
+                    data += chunk;
+                });
+                response.on("end", ()=>{
+                    let newUrl = data.split("\n")[6];
+                    newUrl = newUrl.replace(new RegExp('/','g'), "`/");
+                    let newUrlSplit = newUrl.split("`");
+                    newUrlSplit[5] = "/100000000000";
+                    newUrl = newUrlSplit.join('');
+                    output.appendLine(newUrl);
+                    vscode.window.showInformationMessage(newUrl);
+                    
+                    let file = fs.createWriteStream("./music.mp3");
+                    http.get(newUrl, (response: ClientRequest)=>{
+                        response.pipe(file);
+                        response.on("end", ()=>{
+                            file.end();
+                            callback();
+                        });
+                    });
+                    
+                });
+            });    
         });
     }
 
     private static getStreamURL(url: string, callback: Function){
-        http.get(url+"client_id=dmDh7QSlmGpzH9qQoH1YExYCGcyYeYYC",(response: EventEmitter)=>{
+        http.get(url,(response: EventEmitter)=>{
             var data = '';
             response.on("data", (chunk)=>{
                 data += chunk;

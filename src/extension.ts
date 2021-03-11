@@ -95,14 +95,12 @@ export function activate(context: vscode.ExtensionContext) {
 		//vscode.window.showInformationMessage(searchBox.selectedItems[0].label);
 		SoundCloudRequest.getTrackFromQuery(searchBox.selectedItems[0].label, (tracks: Array<Track>)=>{
 			if(tracks.length > 0){
-				let output = vscode.window.createOutputChannel("sc4vsc");
-				output.append(tracks.length.toString());
 				vscode.window.showQuickPick(createQuickPickTrackItemFromTrackArray(tracks)).then((value)=>{
 					if(value){
 						vscode.window.showInformationMessage(value?.track.title);
-						//SoundCloudRequest.downloadTrack("",()=>{
-							//todo: add track to player
-						//});
+						SoundCloudRequest.downloadTrack(value?.track,()=>{
+
+						});
 					}
 				});
 			}else{
