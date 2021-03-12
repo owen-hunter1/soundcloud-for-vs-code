@@ -23,6 +23,10 @@ function newStatusBarItem(alignment:vscode.StatusBarAlignment, priority:number, 
 	return statusBarItem;
 }
 
+/**
+ * QuickPickTrackItem is a QuickPickItem containing a track
+ */
+
 class QuickPickTrackItem implements vscode.QuickPickItem{
 	label: string;
 	description?: string | undefined;
@@ -36,6 +40,12 @@ class QuickPickTrackItem implements vscode.QuickPickItem{
 	}
 }
 
+/**
+ * converts a track array to a QuickPickTrackItem array
+ * @param trackArr a track array to convert to a QuickPickTrackItem  aray
+ * @returns a QuickPickTrackItem array
+ */
+
 function createQuickPickTrackItemFromTrackArray(trackArr: Array<Track>): Array<QuickPickTrackItem>{
 	let qpiArr: Array<QuickPickTrackItem> = [];
 	for(var i = 0; i < trackArr.length; i++){
@@ -43,6 +53,12 @@ function createQuickPickTrackItemFromTrackArray(trackArr: Array<Track>): Array<Q
 	}
 	return qpiArr;
 }
+
+/**
+ * converts a string array to a QuickPickItem array
+ * @strArr trackArr a string array to convert to a QuickPickTrackItem  aray
+ * @returns a QuickPickItem array
+ */
 
 function createQuickPickItemFromStringArray(strArr: Array<string>): Array<vscode.QuickPickItem>{
 	let qpiArr: Array<vscode.QuickPickItem> = [];
