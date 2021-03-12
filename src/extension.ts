@@ -56,6 +56,9 @@ function createQuickPickItemFromStringArray(strArr: Array<string>): Array<vscode
 // your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
 
+	//track player
+	const trackplayer = new TrackPlayer();
+
 	//position counter for the status bar item
 	let itemPosition = 0;
 
@@ -97,10 +100,11 @@ export function activate(context: vscode.ExtensionContext) {
 			if(tracks.length > 0){
 				vscode.window.showQuickPick(createQuickPickTrackItemFromTrackArray(tracks)).then((value)=>{
 					if(value){
-						vscode.window.showInformationMessage(value?.track.title);
-						SoundCloudRequest.downloadTrack(value?.track,()=>{
-
-						});
+						trackplayer.addToQueue(value.track);
+						if(trackplayer.play()){
+							playButton.text = "$(debug-pause)";
+							playButton.tooltip = "pause";
+						}
 					}
 				});
 			}else{
@@ -119,25 +123,29 @@ export function activate(context: vscode.ExtensionContext) {
 
 	//command initializations
 	context.subscriptions.push(vscode.commands.registerCommand("soundcloud-for-vs-code.play_pause_toggle", ()=>{
-		//todo: replace this check with song player class and add song play functionality
-		if(playButton.text === "$(debug-start)"){
-			vscode.window.showInformationMessage("Playing");
+		if(trackplayer.play()){
 			playButton.text = "$(debug-pause)";
 			playButton.tooltip = "pause";
-		}else{
-			vscode.window.showInformationMessage("Paused");
+		}
+		else{
 			playButton.text = "$(debug-start)";
+			playButton.tooltip = "play";
+			trackplayer.pause();
 		}
 	}));
 
 	context.subscriptions.push(vscode.commands.registerCommand("soundcloud-for-vs-code.skip_next", ()=>{
-		//todo: add skip functionality from song player class
-		vscode.window.showInformationMessage("Skipped Track");
+		trackplayer.skipNext();
+		if(trackplayer.play()){
+			playButton.text = "$(debug-pause)";
+			playButton.tooltip = "pause";
+		}
 	}));
 
 	context.subscriptions.push(vscode.commands.registerCommand("soundcloud-for-vs-code.skip_back", ()=>{
-		//todo: add skip functionality from song player class
-		vscode.window.showInformationMessage("Skipped Back Track");
+		trackplayer.skipBack();
+		playButton.text = "$(debug-pause)";
+		playButton.tooltip = "pause";
 	}));
 
 	context.subscriptions.push(vscode.commands.registerCommand("soundcloud-for-vs-code.show_queue_menu", ()=>{

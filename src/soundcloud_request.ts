@@ -31,7 +31,7 @@ export class SoundCloudRequest{
     }
     //preforms the search for tracks matching keywords
     static getTrackFromQuery(query: string, callback: Function){
-        http.get("https://api-v2.soundcloud.com/search?q=" + query + "&query_urn=soundcloud%3Asearch-autocomplete%3A76a40be97b81410c8631f4b5755df845&facet=model&client_id=dmDh7QSlmGpzH9qQoH1YExYCGcyYeYYC&limit=15", (response: EventEmitter)=>{
+        http.get("https://api-v2.soundcloud.com/search?q=" + query + "&query_urn=soundcloud%3Asearch-autocomplete%3A76a40be97b81410c8631f4b5755df845&facet=model&client_id=dmDh7QSlmGpzH9qQoH1YExYCGcyYeYYC&limit=30", (response: EventEmitter)=>{
             var data = '';
             response.on("data", (chunk)=>{
                 data += chunk;
@@ -47,7 +47,7 @@ export class SoundCloudRequest{
                             track.artist = jsonObj.collection[i].user.username;
                         }
                         track.trackID = jsonObj.collection[i].id;
-                        track.streamURL = jsonObj.collection[i].media.transcodings[0].url;
+                        track.streamURL = jsonObj.collection[i].media.transcodings[0].url; //ocasional error around here. hello by pop smoke/a boogie causes this error. if anyone find other songs please let me know -owen
                         trackArr.push(track);
                     }catch(err){
                         console.log(err);
@@ -64,7 +64,6 @@ export class SoundCloudRequest{
     static downloadTrack(track: Track, callback: Function){
         //holy shit this actually worked
         //dont ask how
-        let output = vscode.window.createOutputChannel("sc4vsc");
         this.getStreamURL(track.streamURL+"?client_id=dmDh7QSlmGpzH9qQoH1YExYCGcyYeYYC", (url: string)=>{
             http.get(url, (response: EventEmitter)=>{
                 var data = '';
@@ -77,10 +76,8 @@ export class SoundCloudRequest{
                     let newUrlSplit = newUrl.split("`");
                     newUrlSplit[5] = "/100000000000";
                     newUrl = newUrlSplit.join('');
-                    output.appendLine(newUrl);
-                    vscode.window.showInformationMessage(newUrl);
-                    
                     let file = fs.createWriteStream("./music.mp3");
+                    
                     http.get(newUrl, (response: ClientRequest)=>{
                         response.pipe(file);
                         response.on("end", ()=>{
