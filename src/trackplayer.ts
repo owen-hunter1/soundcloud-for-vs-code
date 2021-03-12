@@ -29,20 +29,51 @@ export class TrackPlayer{
         this.isPaused = true;
         this.currentTrack = null;
     }
+
+    /**
+     * 
+     * @param track adds a track to the the queue
+     */
+
+
     public addToQueue(track: Track){
         this.queue.push(track);
     }
+
+    /**
+     * 
+     * @param i index of queue item to remove 
+     */
     public removeFromQueue(i: number){
         if(this.queue.length > 0){
             this.queue.splice(i, 1);
         }
     }
+
+    /**
+     * 
+     * @returns the current track being played. if no track return null
+     */
+
     public getCurrentTrack(): Track | null{
         return this.currentTrack;
     }
+
+    /**
+     * 
+     * @returns the list of tracks in the queue
+     */
+
     public getQueue(): Array<Track>{
         return this.queue;
     }
+
+    /**
+     * plays the current song if paused. if no song is being played, check the queue for a the
+     *  next track and play that song. remove track from queue into currenttrack
+     * @returns true if played
+     */
+
     public play(): boolean{
         if(this.isPaused){
             //if no track is being played
@@ -57,8 +88,8 @@ export class TrackPlayer{
                         this.queue.shift();
                         this.player.play();
                         this.isPaused = false;
-                        return true;            
                     });
+                    return true;            
                 }else{
                     //no songs queued
                     return false;
@@ -71,24 +102,50 @@ export class TrackPlayer{
         }else{
             return false;
         }
-        return true;
     }
 
-    public pause(){
+    /**
+     * pauses the track
+     * @returns true if paused
+     */
+
+    public pause(): boolean{
         if(!this.isPaused){
             this.player.pause();
             this.isPaused = true;
+            return true;
         }
+        return false;
     }
-    public skipNext(){
+
+    /**
+     * skips to next track in queue
+     * @returns true if skipped
+     */
+
+    public skipNext(): boolean{
         if(this.queue.length > 0){
             this.player.pause();
             this.currentTrack = null;
+            return true;
         }
+        return false;
     }
-    public skipBack(){
-        this.player.pause();
-        this.player = new audic("music.mp3");
-        this.player.play();
+
+
+    /**
+     * rewinds track
+     * @returns true if skipped
+     */
+
+    public skipBack(): boolean{
+        if(this.currentTrack !== null){
+            this.player.pause();
+            this.player = new audic("music.mp3");
+            this.player.play();
+            return true;
+        }
+        return false;
+        
     }
 }
