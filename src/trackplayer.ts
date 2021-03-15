@@ -1,4 +1,5 @@
 import {SoundCloudRequest} from "./soundcloud_request";
+import { newStatusBarItem } from "./extension";
 const audic = require("audic");
 import * as vscode from 'vscode';
 
@@ -23,11 +24,16 @@ export class TrackPlayer{
     private player;
     public isPaused: boolean;
     private currentTrack: Track | null;
-    constructor(){
+    private trackInfoText: vscode.StatusBarItem;
+    constructor(context: vscode.ExtensionContext){
         this.queue = [];
         this.player = new audic("music.mp3");
         this.isPaused = true;
         this.currentTrack = null;
+
+        this.trackInfoText = newStatusBarItem(vscode.StatusBarAlignment.Right, 10, "", "Current Track");
+        this.trackInfoText.show();
+        context.subscriptions.push(this.trackInfoText);
     }
 
     /**
@@ -85,6 +91,7 @@ export class TrackPlayer{
                         //update current track and queue
                         this.player = new audic("music.mp3");
                         this.currentTrack = this.queue[0];
+                        this.updateTrackInfo();
                         this.queue.shift();
                         this.player.play();
                         this.isPaused = false;
@@ -127,6 +134,7 @@ export class TrackPlayer{
         if(this.queue.length > 0){
             this.player.pause();
             this.currentTrack = null;
+            this.updateTrackInfo();
             return true;
         }
         return false;
@@ -143,9 +151,19 @@ export class TrackPlayer{
             this.player.pause();
             this.player = new audic("music.mp3");
             this.player.play();
+            this.updateTrackInfo();
             return true;
         }
         return false;
-        
+    }
+
+    public updateTrackInfo(){
+        console.log(this.currentTrack);
+        if(this.currentTrack){
+            this.trackInfoText.text = this.currentTrack.title + " - " + this.currentTrack.artist;
+            
+        }else{
+            this.trackInfoText.text = "";
+        }
     }
 }

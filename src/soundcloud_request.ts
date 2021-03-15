@@ -76,7 +76,7 @@ export class SoundCloudRequest{
     /**
      * downloads a track to ./music.mp3
      * @param track the track to download
-     * @param callback thefunction to return to after a download
+     * @param callback the function to return to after a download
      */
     static downloadTrack(track: Track, callback: Function){
         //get the randomly generated track stream url

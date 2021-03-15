@@ -12,7 +12,7 @@ import {SoundCloudRequest} from "./soundcloud_request";
 *@param command status bar item action
 *@returns a new status bar item
 **/
-function newStatusBarItem(alignment:vscode.StatusBarAlignment, priority:number, text:string, tooltip:string, command?: string): vscode.StatusBarItem{
+export function newStatusBarItem(alignment:vscode.StatusBarAlignment, priority:number, text:string, tooltip:string, command?: string): vscode.StatusBarItem{
 	const statusBarItem : vscode.StatusBarItem = vscode.window.createStatusBarItem(alignment, priority);
 	statusBarItem.text = text;
 	statusBarItem.tooltip = tooltip;
@@ -73,7 +73,7 @@ function createQuickPickItemFromStringArray(strArr: Array<string>): Array<vscode
 export function activate(context: vscode.ExtensionContext) {
 
 	//track player
-	const trackplayer = new TrackPlayer();
+	const trackplayer = new TrackPlayer(context);
 
 	//position counter for the status bar item
 	let itemPosition = 0;
@@ -99,11 +99,6 @@ export function activate(context: vscode.ExtensionContext) {
 	const queueButton: vscode.StatusBarItem = newStatusBarItem(vscode.StatusBarAlignment.Right, --itemPosition, "$(list-ordered)", "queue", "soundcloud-for-vs-code.show_queue_menu");
 	queueButton.show();
 	context.subscriptions.push(queueButton);
-
-	//status bar text
-	const trackInfoText: vscode.StatusBarItem = newStatusBarItem(vscode.StatusBarAlignment.Right, --itemPosition, "Current Song - Current Artist", "Current Track");
-	trackInfoText.show();
-	context.subscriptions.push(trackInfoText);
 
 	//quick pick
 	const searchBox:vscode.QuickPick<vscode.QuickPickItem> = vscode.window.createQuickPick();
@@ -154,14 +149,14 @@ export function activate(context: vscode.ExtensionContext) {
 		trackplayer.skipNext();
 		if(trackplayer.play()){
 			playButton.text = "$(debug-pause)";
-			playButton.tooltip = "pause";
+			playButton.tooltip = "skip next";
 		}
 	}));
 
 	context.subscriptions.push(vscode.commands.registerCommand("soundcloud-for-vs-code.skip_back", ()=>{
 		trackplayer.skipBack();
 		playButton.text = "$(debug-pause)";
-		playButton.tooltip = "pause";
+		playButton.tooltip = "skip back";
 	}));
 
 	context.subscriptions.push(vscode.commands.registerCommand("soundcloud-for-vs-code.show_queue_menu", ()=>{
