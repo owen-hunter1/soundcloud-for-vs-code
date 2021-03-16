@@ -4,15 +4,15 @@
 
 <details><summary>Search for a track</summary>
 
-![](./images/search.gif)
+![](https://i.imgur.com/eyZbYyW.gif)
 </details>
 <details><summary>Play, pause, skip, and reverse track</summary>
 
-![](./images/playpause.png)
+![](https://i.imgur.com/DbuZzeQ.png)
 </details>
 <details><summary>Add tracks to the queue</summary>
 
-![](./images/queue.gif)
+![](https://i.imgur.com/uKIbDJl.gif)
 </details>
 
 
