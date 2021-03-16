@@ -15,6 +15,7 @@
 ![](https://i.imgur.com/uKIbDJl.gif)
 </details>
 
+<br>
 
 Coming soon
  - Display the time left in the current track
@@ -23,12 +24,12 @@ Coming soon
  - Search for entire playlists
 
 
-## Requirements
+## Requirements and Installation Process
 
-1. [VSCode](https://code.visualstudio.com/download)
-2. [Node.js](https://nodejs.org/en/download/)
-3. [Download SoundCloud for VS Code Repository](https://github.com/owen-hunter1/soundcloud-for-vs-code)
-4. Open repository in VS Code (File -> Open Folder...; Ctrl + K, Ctrl + O)
-5. Open terminal in VS Code (View -> Terminal; Ctrl + `)
+1. [Download VSCode](https://code.visualstudio.com/download)
+2. [Download Node.js](https://nodejs.org/en/download/)
+3. [Download the SoundCloud for VS Code repository](https://github.com/owen-hunter1/soundcloud-for-vs-code)
+4. Open the repository in VS Code (File -> Open Folder...; Ctrl + K, Ctrl + O)
+5. Open a terminal window in VS Code and enter the following command (View -> Terminal; Ctrl + `)
 6. npm install
-7. Press F5 in VS Code
+7. Run the extension in VS Code (Run -> Start Debugging; F5)
