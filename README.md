@@ -1,65 +1,34 @@
-# soundcloud-for-vs-code README
-
-This is the README for your extension "soundcloud-for-vs-code". After writing up a brief description, we recommend including the following sections.
+# SoundCloud for VS Code README
 
 ## Features
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
+<details><summary>Search for a track</summary>
 
-For example if there is an image subfolder under your extension project workspace:
+![](./images/search.gif)
+</details>
+<details><summary>Play, pause, skip, and reverse track</summary>
 
-\!\[feature X\]\(images/feature-x.png\)
+![](./images/playpause.png)
+</details>
+<details><summary>Add tracks to the queue</summary>
 
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
+![](./images/queue.gif)
+</details>
+
+
+Coming soon
+ - Display the time left in the current track
+ - View tracks in the queue
+ - Reorder the queue
+ - Search for entire playlists
+
 
 ## Requirements
 
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
-
-## Extension Settings
-
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
-
-For example:
-
-This extension contributes the following settings:
-
-* `myExtension.enable`: enable/disable this extension
-* `myExtension.thing`: set to `blah` to do something
-
-## Known Issues
-
-Calling out known issues can help limit users opening duplicate issues against your extension.
-
-## Release Notes
-
-Users appreciate release notes as you update your extension.
-
-### 1.0.0
-
-Initial release of ...
-
-### 1.0.1
-
-Fixed issue #.
-
-### 1.1.0
-
-Added features X, Y, and Z.
-
------------------------------------------------------------------------------------------------------------
-
-## Working with Markdown
-
-**Note:** You can author your README using Visual Studio Code.  Here are some useful editor keyboard shortcuts:
-
-* Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux)
-* Toggle preview (`Shift+CMD+V` on macOS or `Shift+Ctrl+V` on Windows and Linux)
-* Press `Ctrl+Space` (Windows, Linux) or `Cmd+Space` (macOS) to see a list of Markdown snippets
-
-### For more information
-
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
-
-**Enjoy!**
+1. [VSCode](https://code.visualstudio.com/download)
+2. [Node.js](https://nodejs.org/en/download/)
+3. [Download SoundCloud for VS Code Repository](https://github.com/owen-hunter1/soundcloud-for-vs-code)
+4. Open repository in VS Code (File -> Open Folder...; Ctrl + K, Ctrl + O)
+5. Open terminal in VS Code (View -> Terminal; Ctrl + `)
+6. npm install
+7. Press F5 in VS Code

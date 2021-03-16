@@ -43,6 +43,7 @@ export class TrackPlayer{
 
 
     public addToQueue(track: Track){
+        vscode.window.showInformationMessage(track.title + " - " + track.artist + " was entered in the queue.");
         this.queue.push(track);
     }
 
@@ -158,7 +159,6 @@ export class TrackPlayer{
     }
 
     public updateTrackInfo(){
-        console.log(this.currentTrack);
         if(this.currentTrack){
             this.trackInfoText.text = this.currentTrack.title + " - " + this.currentTrack.artist;
             
