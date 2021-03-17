@@ -1,0 +1,17 @@
+language: node_js
+
+node_js:
+- "stable"
+
+install: npm install -g typescript
+- |
+  if [ $TRAVIS_OS_NAME == "linux" ]; then
+    export DISPLAY=':99.0'
+    /usr/bin/Xvfb :99 -screen 0 1024x768x24 > /dev/null 2>&1 &
+  fi
+script:
+- |
+  echo ">>> Compile vscode-test"
+  cd src
+  cd test
+  tsc runTest.ts
