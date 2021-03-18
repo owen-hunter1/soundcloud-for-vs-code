@@ -9,12 +9,17 @@ export class Track{
     public album: string;
     public trackID: string;
     public streamURL: string;
-    constructor(){
-        this.title="";
-        this.artist="";
-        this.album="";
-        this.trackID="";
-        this.streamURL="";
+    constructor(title?: string, artist?: string, album?: string, trackID?: string, streamURL?: string){
+        title ? this.title = title : this.title = "";
+        artist ? this.artist = artist : this.artist = "";
+        album ? this.album = album : this.album = "";
+        trackID ? this.trackID = trackID : this.trackID = "";
+        streamURL ? this.streamURL = streamURL : this.streamURL = "";
+        // this.title="";
+        // this.artist="";
+        // this.album="";
+        // this.trackID="";
+        // this.streamURL="";
     }
 }
 
@@ -25,7 +30,7 @@ export class TrackPlayer{
     public isPaused: boolean;
     private currentTrack: Track | null;
     private trackInfoText: vscode.StatusBarItem;
-    constructor(context: vscode.ExtensionContext){
+    constructor(context?: vscode.ExtensionContext){
         this.queue = [];
         this.player = new audic("music.mp3");
         this.isPaused = true;
@@ -33,7 +38,9 @@ export class TrackPlayer{
 
         this.trackInfoText = newStatusBarItem(vscode.StatusBarAlignment.Right, 10, "", "Current Track");
         this.trackInfoText.show();
-        context.subscriptions.push(this.trackInfoText);
+        if(context != undefined){
+            context.subscriptions.push(this.trackInfoText);
+        }
     }
 
     /**
