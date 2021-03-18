@@ -1,7 +1,8 @@
 language: node_js
-
-node_js:
-- "stable"
+os:
+- osx
+- linux
+node_js: 10
 
 install:
 - |
@@ -12,5 +13,9 @@ install:
 script:
 - |
   echo ">>> Compile vscode-test"
-  
+  yarn && yarn compile
+  echo ">>> Compiled vscode-test"
+  cd src
+  echo ">>> Run sample integration test"
+  yarn && yarn compile && yarn test
 cache: yarn
