@@ -10,7 +10,7 @@ export class Timer{
         return {
             
             get time1() {
-                const time1 = (new Date().getTime() - timeStart / 1000);
+                const time1 = Math.ceil((new Date().getTime() - timeStart) / 1000);
                 return time1;
             },
             
