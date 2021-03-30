@@ -31,7 +31,7 @@ Coming soon
 3. [Download the SoundCloud for VS Code repository](https://github.com/owen-hunter1/soundcloud-for-vs-code)
 4. Open the repository in VS Code (File -> Open Folder...; Ctrl + K, Ctrl + O)
 5. Open a terminal window in VS Code and enter the following command (View -> Terminal; Ctrl + `)
-6. npm install
+6. `npm install`
 
 ## To Build and Run
 
@@ -43,3 +43,18 @@ Coming soon
 1. Click on the Run and Debug button on the left side of the VS Code window (Ctrl + Shift + D)
 2. At the top left of the VS Code window, next to the green play button select "Extension Tests"
 3. Run the extension in VS Code (Run -> Start Debugging; F5)
+
+## Figure Generation
+
+### Requirements
+
+1. Python and pip
+2. The following Python packages: numpy, ploty
+
+
+### Generation
+
+1. Move to the figures directory (`cd figures/`)
+2. Run generate_table.py (`python3 generate_table.py`)
+3. Follow the instructions that are printed when running generate_table.py
+4. The table will be opened in your default browser and can be saved

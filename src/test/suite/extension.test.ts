@@ -4,20 +4,24 @@ import { Timer } from '../../timer';
 import {TrackPlayer, Track} from "../../trackplayer";
 import {SoundCloudRequest} from "../../soundcloud_request";
 
+const testNames = ["timer_tick", "track_queue", "query_track", "get_track_from_query",
+"playpause_with_no_track"];
+
 suite('Extension Test Suite', () => {
 	vscode.window.showInformationMessage('Start all tests.');
 
-	test('Timer tick', () => {
+	test('timer_tick', () => {
 		const time = new Timer();
 		let result = time.tick().time1;
 		let start = new Date().getTime();
 		let time2 = (new Date().getTime() - start);
 		
 		assert.equal(result,time2);
+		assert.equal(0, 1);
 
 	});
 
-	test("Track Queue", () => {
+	test("track_queue", () => {
 		let myTrackPlayer = new TrackPlayer;
 		let track1 = new Track("Track 1", "Alina");
 		let track2 = new Track("Track 2", "Owen");
@@ -41,7 +45,7 @@ suite('Extension Test Suite', () => {
 		assert.equal(myTrackPlayer.getQueue()[0].artist, track4.artist);
 	});
 
-	test("Query Track", () => {
+	test("query_track", () => {
 		let myTrackPlayer = new TrackPlayer;
 		const mySearchTerm = "circles";
 
@@ -51,7 +55,7 @@ suite('Extension Test Suite', () => {
 		});
 	});
 
-	test("Get Track from Query", () => {
+	test("get_track_from_query", () => {
 		let myTrackPlayer = new TrackPlayer;
 		const mySearchTerm = "Circles Post Malone";
 
@@ -59,9 +63,11 @@ suite('Extension Test Suite', () => {
 			myTrackPlayer.pause();
 			assert.notStrictEqual(tracks.length, 0);
 		});
+
+		assert.equal(0, 1);
 	});
 
-	test("Play/Pause with no track", () => {
+	test("playpause_with_no_track", () => {
 		let myTrackPlayer = new TrackPlayer;
 		myTrackPlayer.play();
 		assert.equal(myTrackPlayer.isPaused, true);

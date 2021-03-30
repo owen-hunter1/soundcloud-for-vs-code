@@ -14,7 +14,7 @@ export class Timer{
                 return time1;
             },
             
-        }
+        };
     }
     
 }

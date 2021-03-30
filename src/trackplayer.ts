@@ -26,7 +26,7 @@ export class Track{
 export class TrackPlayer{
     //queue is an array of Tracks. Songs appear in the array in the order which they are to be played
     private queue: Array<Track>;
-    private player;
+    private player: typeof audic;
     public isPaused: boolean;
     private currentTrack: Track | null;
     private trackInfoText: vscode.StatusBarItem;
@@ -38,7 +38,7 @@ export class TrackPlayer{
 
         this.trackInfoText = newStatusBarItem(vscode.StatusBarAlignment.Right, 10, "", "Current Track");
         this.trackInfoText.show();
-        if(context != undefined){
+        if(context !== undefined){
             context.subscriptions.push(this.trackInfoText);
         }
     }
