@@ -43,7 +43,11 @@ for i in range(len(testNames)):
     # Remove left over commas
     for j in range(len(testNames[i])):
         testNames[i][j] = testNames[i][j].replace(",", "")
-    
+        
+        # If there are any empty items in the list
+        if len(testNames[i][j]) == 0:
+            testNames[i].pop(j)
+
 # Combine lists
 unitTests = []
 for i in range(len(testNames)):
@@ -55,7 +59,7 @@ print("2. Manually select a new build")
 method = input("Choose a build method (1 or 2): ")
 
 if method == "1":
-    url = 'https://api.travis-ci.com/v3/job/491911244/log.txt'
+    url = 'https://api.travis-ci.com/v3/job/495111588/log.txt'
 
 elif method == "2":
     print("\n\nOpening the Travis CI page for SoundCloud for VS Code...")
