@@ -33,12 +33,12 @@ Coming soon
 5. Open a terminal window in VS Code and enter the following command (View -> Terminal; Ctrl + `)
 6. `npm install`
 
-## To Build and Run
+## Build and Run
 
 1. Open the repository in VS Code (File -> Open Folder...; Ctrl + K, Ctrl + O)
 2. Run the extension in VS Code (Run -> Start Debugging; F5)
 
-## To Build and Run Tests
+## Build and Run Tests
 
 1. Click on the Run and Debug button on the left side of the VS Code window (Ctrl + Shift + D)
 2. At the top left of the VS Code window, next to the green play button select "Extension Tests"
@@ -48,9 +48,9 @@ Coming soon
 
 ### Requirements
 
-1. Python and pip
-2. The following Python packages: numpy, ploty
-
+1. Install Python and pip
+2. `pip3 install numpy`
+3. `pip3 install ploty`
 
 ### Generation
 
