@@ -60,7 +60,7 @@ if method == "1":
 elif method == "2":
     print("\n\nOpening the Travis CI page for SoundCloud for VS Code...")
     print("https://www.travis-ci.com/github/owen-hunter1/soundcloud-for-vs-code")
-    webbrowser.open("https://www.travis-ci.com/github/owen-hunter1/soundcloud-for-vs-code")
+    #webbrowser.open("https://www.travis-ci.com/github/owen-hunter1/soundcloud-for-vs-code")
 
     print("\nFollow the following steps to get the URL of the most recent build.")
     print("1. Under the most recent build, click on XX.1 or XX.2")
@@ -110,7 +110,16 @@ if numOfFailing > 0:
 
     for i in range(indexOfFailingTests, len(contents)):
         if contents[i].find("Extension Test Suite") != -1:
-            nameOfFailingTest = contents[i+1]
+            # Keep looking until we find a test name
+            for j in range(i+1, len(contents)):
+                anyalpha = False
+                for k in contents[j]:
+                    if k.isalpha():
+                        anyalpha = True
+
+                if anyalpha == True:
+                    nameOfFailingTest = contents[j]
+                    break
             
             nameOfFailingTest = nameOfFailingTest.replace(" ", "")
             nameOfFailingTest = nameOfFailingTest.replace(":", "")

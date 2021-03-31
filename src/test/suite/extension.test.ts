@@ -17,8 +17,6 @@ suite('Extension Test Suite', () => {
 		let time2 = (new Date().getTime() - start);
 		
 		assert.equal(result,time2);
-		assert.equal(0, 1);
-
 	});
 
 	test("track_queue", () => {
@@ -63,8 +61,6 @@ suite('Extension Test Suite', () => {
 			myTrackPlayer.pause();
 			assert.notStrictEqual(tracks.length, 0);
 		});
-
-		assert.equal(0, 1);
 	});
 
 	test("playpause_with_no_track", () => {
