@@ -141,7 +141,8 @@ export class TrackPlayer{
     public skipNext(): boolean{
         if(this.queue.length > 0){
             this.player.pause();
-            this.currentTrack = null;
+            const shifted = this.queue.shift();
+            shifted === undefined ? this.currentTrack = null : this.currentTrack = shifted; 
             this.updateTrackInfo();
             return true;
         }

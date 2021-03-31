@@ -3,20 +3,31 @@ import * as vscode from 'vscode';
 import { Timer } from '../../timer';
 import {TrackPlayer, Track} from "../../trackplayer";
 import {SoundCloudRequest} from "../../soundcloud_request";
+import * as ext from '../../extension';
 
-const testNames = ["timer_tick", "track_queue", "query_track", "get_track_from_query",
-"playpause_with_no_track"];
+const testNames = ["timer_tick", "track_creation", "track_queue", "query_track",
+"get_track_from_query", "play_with_sample_track", "play_pause_with_no_track",
+"new_status_bar_item", "skip_to_next_track", "skip_with_no_next_track"];
 
 suite('Extension Test Suite', () => {
 	vscode.window.showInformationMessage('Start all tests.');
 
-	test('timer_tick', () => {
+	test("timer_tick", () => {
 		const time = new Timer();
 		let result = time.tick().time1;
 		let start = new Date().getTime();
 		let time2 = (new Date().getTime() - start);
 		
 		assert.equal(result,time2);
+	});
+
+	test("track_creation", () => {
+		const testTrack = new Track("title", "artist", "album", "trackID", "url");
+		assert.equal(testTrack.title, "title");
+		assert.equal(testTrack.artist, "artist");
+		assert.equal(testTrack.album, "album");
+		assert.equal(testTrack.trackID, "trackID");
+		assert.equal(testTrack.streamURL, "url");
 	});
 
 	test("track_queue", () => {
@@ -63,11 +74,52 @@ suite('Extension Test Suite', () => {
 		});
 	});
 
-	test("playpause_with_no_track", () => {
+	test("play_with_sample_track", () => {
+		let myTrackPlayer = new TrackPlayer;
+		const sampleTrack = new Track("Circles", "Post Malone", "", "672849185",
+		"https://api-v2.soundcloud.com/media/soundcloud:tracks:672849185/335d3cd1-701f-4b8d-a180-4a409326d87a/stream/hls");
+		myTrackPlayer.addToQueue(sampleTrack);
+		assert.equal(myTrackPlayer.play(), true);
+		myTrackPlayer.pause();
+	});
+
+	test("play_pause_with_no_track", () => {
 		let myTrackPlayer = new TrackPlayer;
 		myTrackPlayer.play();
 		assert.equal(myTrackPlayer.isPaused, true);
 		myTrackPlayer.pause();
 		assert.equal(myTrackPlayer.isPaused, true);
+	});
+
+	test("new_status_bar_item", () => {
+		const testToolBarItem = ext.newStatusBarItem(vscode.StatusBarAlignment.Right, -1, "Test item", "test");
+		assert.equal(testToolBarItem.alignment, vscode.StatusBarAlignment.Right);
+		assert.equal(testToolBarItem.priority, -1);
+		assert.equal(testToolBarItem.text, "Test item");
+		assert.equal(testToolBarItem.tooltip, "test");
+	});
+
+	test("skip_to_next_track", () => {
+		let myTrackPlayer = new TrackPlayer;
+		const sampleTrack1 = new Track("Circles", "Post Malone", "", "672849185",
+		"https://api-v2.soundcloud.com/media/soundcloud:tracks:672849185/335d3cd1-701f-4b8d-a180-4a409326d87a/stream/hls");
+		const sampleTrack2 = new Track("Blinding Lights", "The Weeknd", "", "718846078",
+		"https://api-v2.soundcloud.com/media/soundcloud:tracks:718846078/5127ca59-0b1a-447d-a6fb-33f6b7d6e5b8/stream/hls");
+		myTrackPlayer.addToQueue(sampleTrack1);
+		myTrackPlayer.addToQueue(sampleTrack2);
+		assert.equal(myTrackPlayer.skipNext(), true);
+	});
+
+	test("skip_with_no_next_track", () => {
+		let myTrackPlayer = new TrackPlayer;
+		const sampleTrack = new Track("Circles", "Post Malone", "", "672849185",
+		"https://api-v2.soundcloud.com/media/soundcloud:tracks:672849185/335d3cd1-701f-4b8d-a180-4a409326d87a/stream/hls");
+		myTrackPlayer.addToQueue(sampleTrack);
+
+		// This will put the first item in the queue as the currently playing 
+		// track without downloading it or playing it.
+		myTrackPlayer.skipNext();
+
+		assert.equal(myTrackPlayer.skipNext(), false);
 	});
 });

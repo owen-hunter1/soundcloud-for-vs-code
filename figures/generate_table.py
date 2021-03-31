@@ -60,7 +60,7 @@ if method == "1":
 elif method == "2":
     print("\n\nOpening the Travis CI page for SoundCloud for VS Code...")
     print("https://www.travis-ci.com/github/owen-hunter1/soundcloud-for-vs-code")
-    #webbrowser.open("https://www.travis-ci.com/github/owen-hunter1/soundcloud-for-vs-code")
+    webbrowser.open("https://www.travis-ci.com/github/owen-hunter1/soundcloud-for-vs-code")
 
     print("\nFollow the following steps to get the URL of the most recent build.")
     print("1. Under the most recent build, click on XX.1 or XX.2")
