@@ -2,6 +2,8 @@
 
 ## Features
 
+### Current Features
+
 <details><summary>Search for a track</summary>
 
 ![](https://i.imgur.com/eyZbYyW.gif)
@@ -17,7 +19,7 @@
 
 <br>
 
-Coming soon
+### Features Coming Soon
  - Display the time left in the current track
  - View tracks in the queue
  - Reorder the queue
@@ -33,12 +35,14 @@ Coming soon
 5. Open a terminal window in VS Code and enter the following command (View -> Terminal; Ctrl + `)
 6. `npm install`
 
-## Build and Run
+## Build
+
+### Build and Run
 
 1. Open the repository in VS Code (File -> Open Folder...; Ctrl + K, Ctrl + O)
 2. Run the extension in VS Code (Run -> Start Debugging; F5)
 
-## Build and Run Tests
+### Build and Run Tests
 
 1. Click on the Run and Debug button on the left side of the VS Code window (Ctrl + Shift + D)
 2. At the top left of the VS Code window, next to the green play button select "Extension Tests"

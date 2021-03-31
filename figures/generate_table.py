@@ -59,7 +59,7 @@ print("2. Manually select a new build")
 method = input("Choose a build method (1 or 2): ")
 
 if method == "1":
-    url = 'https://api.travis-ci.com/v3/job/495111588/log.txt'
+    url = 'https://api.travis-ci.com/v3/job/495286972/log.txt'
 
 elif method == "2":
     print("\n\nOpening the Travis CI page for SoundCloud for VS Code...")
@@ -70,7 +70,7 @@ elif method == "2":
     print("1. Under the most recent build, click on XX.1 or XX.2")
     print("2. Under the job log, click on \"Raw log\"")
     print("3. Copy this URL.")
-    print("It should look something like \"https://api.travis-ci.com/v3/job/491911244/log.txt\"")
+    print("It should look something like \"https://api.travis-ci.com/v3/job/495286972/log.txt\"")
     url = input("URL: ")
 else:
     print("Invalid input.")

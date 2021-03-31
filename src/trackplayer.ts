@@ -2,13 +2,14 @@ import {SoundCloudRequest} from "./soundcloud_request";
 import { newStatusBarItem } from "./extension";
 const audic = require("audic");
 import * as vscode from 'vscode';
+import { URL } from "node:url";
 
 export class Track{
     public title: string;
     public artist: string;
     public album: string;
-    public trackID: string;
-    public streamURL: string;
+    public trackID: string;  // change to uuid
+    public streamURL: string;  // change to URL
     constructor(title?: string, artist?: string, album?: string, trackID?: string, streamURL?: string){
         title ? this.title = title : this.title = "";
         artist ? this.artist = artist : this.artist = "";
