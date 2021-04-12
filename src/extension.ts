@@ -3,6 +3,7 @@
 import * as vscode from 'vscode';
 import {TrackPlayer, Track} from "./trackplayer";
 import {SoundCloudRequest} from "./soundcloud_request";
+import {Timer} from "./timer";
 
 /**Creates status bar item
 *@param alignment align from left or right of status bar
@@ -79,7 +80,6 @@ export function activate(context: vscode.ExtensionContext) {
 	let itemPosition = 0;
 
 	//window item inititalizations
-	//buttons
 	const searchButton: vscode.StatusBarItem = newStatusBarItem(vscode.StatusBarAlignment.Right, --itemPosition, "$(search-view-icon)", "search for songs", "soundcloud-for-vs-code.show_search_menu");
 	searchButton.show();
 	context.subscriptions.push(searchButton);

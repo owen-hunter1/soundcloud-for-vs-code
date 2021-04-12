@@ -1,5 +1,6 @@
 import {SoundCloudRequest} from "./soundcloud_request";
 import { newStatusBarItem } from "./extension";
+import { Timer } from "./timer";
 const audic = require("audic");
 import * as vscode from 'vscode';
 import { URL } from "node:url";
@@ -31,6 +32,7 @@ export class TrackPlayer{
     public isPaused: boolean;
     private currentTrack: Track | null;
     private trackInfoText: vscode.StatusBarItem;
+    private timer: Timer;
     constructor(context?: vscode.ExtensionContext){
         this.queue = [];
         this.player = new audic("music.mp3");
@@ -41,6 +43,9 @@ export class TrackPlayer{
         this.trackInfoText.show();
         if(context !== undefined){
             context.subscriptions.push(this.trackInfoText);
+            this.timer = new Timer(context);
+        } else {
+            this.timer = new Timer;
         }
     }
 
@@ -48,8 +53,6 @@ export class TrackPlayer{
      * 
      * @param track adds a track to the the queue
      */
-
-
     public addToQueue(track: Track){
         vscode.window.showInformationMessage(track.title + " - " + track.artist + " was entered in the queue.");
         this.queue.push(track);
@@ -88,7 +91,6 @@ export class TrackPlayer{
      *  next track and play that song. remove track from queue into currenttrack
      * @returns true if played
      */
-
     public play(): boolean{
         if(this.isPaused){
             //if no track is being played
@@ -101,8 +103,10 @@ export class TrackPlayer{
                         this.player = new audic("music.mp3");
                         this.currentTrack = this.queue[0];
                         this.updateTrackInfo();
+                        this.timer.setCurrentTime(this.player.currentTime, this.player.durration);
                         this.queue.shift();
                         this.player.play();
+                        this.timer.startTimer();
                         this.isPaused = false;
                     });
                     return true;            
@@ -128,6 +132,7 @@ export class TrackPlayer{
     public pause(): boolean{
         if(!this.isPaused){
             this.player.pause();
+            this.timer.stopTimer();
             this.isPaused = true;
             return true;
         }
@@ -138,7 +143,6 @@ export class TrackPlayer{
      * skips to next track in queue
      * @returns true if skipped
      */
-
     public skipNext(): boolean{
         if(this.queue.length > 0){
             this.player.pause();
@@ -155,7 +159,6 @@ export class TrackPlayer{
      * rewinds track
      * @returns true if skipped
      */
-
     public skipBack(): boolean{
         if(this.currentTrack !== null){
             this.player.pause();
@@ -167,6 +170,9 @@ export class TrackPlayer{
         return false;
     }
 
+    /**
+     * Updates the status bar item with the current track info (title and artist)
+     */
     public updateTrackInfo(){
         if(this.currentTrack){
             this.trackInfoText.text = this.currentTrack.title + " - " + this.currentTrack.artist;
