@@ -3,6 +3,9 @@ import requests
 import webbrowser
 import numpy as np
 import plotly.graph_objects as plt
+import dash
+import dash_core_components as dcc
+import dash_html_components as html
 
 print ("Generating table...")
 
@@ -59,7 +62,7 @@ print("2. Manually select a new build")
 method = input("Choose a build method (1 or 2): ")
 
 if method == "1":
-    url = 'https://api.travis-ci.com/v3/job/495286972/log.txt'
+    url = 'https://api.travis-ci.com/v3/job/498522710/log.txt'
 
 elif method == "2":
     print("\n\nOpening the Travis CI page for SoundCloud for VS Code...")
@@ -136,7 +139,8 @@ if numOfFailing > 0:
 
 
 # Make the table
-fig = plt.Figure(data=[plt.Table(
+fig = plt.Figure(
+    data=[plt.Table(
     header=dict(values=['Test Name', 'Passed or Failed'],
                 line_color='darkslategray',
                 fill_color='rgb(179, 205, 227)',
@@ -146,8 +150,12 @@ fig = plt.Figure(data=[plt.Table(
                fill_color='rgb(238,238,238)',
                align='left'))
 ])
-fig.update_layout(width=500)
-fig.show()
+# fig.update_layout(width=700)
+
+# Use Dash to display the table
+dashApp = dash.Dash()
+dashApp.layout = html.Div([dcc.Graph(figure=fig)])
+dashApp.run_server(debug=True, use_reloader=False)
 
 # Clean up 
 os.remove("latestBuild.txt")

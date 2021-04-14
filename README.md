@@ -20,7 +20,6 @@
 <br>
 
 ### Features Coming Soon
- - Display the time left in the current track
  - View tracks in the queue
  - Reorder the queue
  - Search for entire playlists
@@ -55,10 +54,12 @@
 1. Install Python and pip
 2. `pip3 install numpy`
 3. `pip3 install plotly`
+4. `pip3 install dash`
 
 ### Generation
 
 1. Move to the figures directory (`cd figures/`)
 2. Run generate_table.py (`python3 generate_table.py`)
 3. Follow the instructions that are printed when running generate_table.py
-4. The table will be opened in your default browser and can be saved
+4. Open the link that follows "Dash is running on" (It should look something like http://127.0.0.1:8050/)
+5. The table can be saved using the "Download plot as png" button in the top left.

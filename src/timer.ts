@@ -27,7 +27,7 @@ export class Timer{
      * Starts the timer and sets the time until timeout.
      */
     public startTimer() {
-        this.intervalID = setInterval(this.tick.bind(this), 1000)
+        this.intervalID = setInterval(this.tick.bind(this), 1000);
         this.timeoutID = setTimeout(this.stopTimer.bind(this), (this.timeRemaining + 1) * 1000);
     }
 

@@ -169,7 +169,6 @@ export class TrackPlayer{
      * Updates the status bar item with the current track info (title and artist)
      */
     public updateTrackInfo(){
-        console.log("Updating track info...")
         if(this.currentTrack){
             this.trackInfoText.text = this.currentTrack.title + " - " + this.currentTrack.artist;
             
