@@ -150,7 +150,7 @@ fig = plt.Figure(
                fill_color='rgb(238,238,238)',
                align='left'))
 ])
-# fig.update_layout(width=700)
+fig.update_layout(width=1000, height=1000)
 
 # Use Dash to display the table
 dashApp = dash.Dash()

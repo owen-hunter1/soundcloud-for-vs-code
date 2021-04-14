@@ -2,7 +2,7 @@
 
 ## Features
 
-### Current Features
+### Core Features
 
 <details><summary>Search for a track</summary>
 
