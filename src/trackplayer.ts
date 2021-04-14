@@ -11,17 +11,14 @@ export class Track{
     public album: string;
     public trackID: string;  // change to uuid
     public streamURL: string;  // change to URL
-    constructor(title?: string, artist?: string, album?: string, trackID?: string, streamURL?: string){
+    public length: number;  // seconds
+    constructor(title?: string, artist?: string, album?: string, trackID?: string, streamURL?: string, length?: number){
         title ? this.title = title : this.title = "";
         artist ? this.artist = artist : this.artist = "";
         album ? this.album = album : this.album = "";
         trackID ? this.trackID = trackID : this.trackID = "";
         streamURL ? this.streamURL = streamURL : this.streamURL = "";
-        // this.title="";
-        // this.artist="";
-        // this.album="";
-        // this.trackID="";
-        // this.streamURL="";
+        length ? this.length = length : this.length = 0;
     }
 }
 
@@ -72,7 +69,6 @@ export class TrackPlayer{
      * 
      * @returns the current track being played. if no track return null
      */
-
     public getCurrentTrack(): Track | null{
         return this.currentTrack;
     }
@@ -81,7 +77,6 @@ export class TrackPlayer{
      * 
      * @returns the list of tracks in the queue
      */
-
     public getQueue(): Array<Track>{
         return this.queue;
     }
@@ -103,7 +98,11 @@ export class TrackPlayer{
                         this.player = new audic("music.mp3");
                         this.currentTrack = this.queue[0];
                         this.updateTrackInfo();
-                        this.timer.setCurrentTime(this.player.currentTime, this.player.durration);
+                        // console.log("currentTime then durration");
+                        // console.log(this.player.currentTime);
+                        // console.log(this.player.durration);
+                        // console.log(this.queue[0].length);
+                        this.timer.setCurrentTime(this.player.currentTime, this.currentTrack.length);
                         this.queue.shift();
                         this.player.play();
                         this.timer.startTimer();
@@ -115,7 +114,9 @@ export class TrackPlayer{
                     return false;
                 }
             }else{
+                this.timer.setCurrentTime(this.player.currentTime, this.currentTrack.length);
                 this.player.play();
+                this.timer.startTimer();
                 this.isPaused = false;   
                 return true; 
             }
@@ -128,7 +129,6 @@ export class TrackPlayer{
      * pauses the track
      * @returns true if paused
      */
-
     public pause(): boolean{
         if(!this.isPaused){
             this.player.pause();
@@ -145,10 +145,8 @@ export class TrackPlayer{
      */
     public skipNext(): boolean{
         if(this.queue.length > 0){
-            this.player.pause();
-            const shifted = this.queue.shift();
-            shifted === undefined ? this.currentTrack = null : this.currentTrack = shifted; 
-            this.updateTrackInfo();
+            this.pause();
+            this.currentTrack = null;
             return true;
         }
         return false;
@@ -164,7 +162,7 @@ export class TrackPlayer{
             this.player.pause();
             this.player = new audic("music.mp3");
             this.player.play();
-            this.updateTrackInfo();
+            // this.updateTrackInfo();
             return true;
         }
         return false;
@@ -174,6 +172,7 @@ export class TrackPlayer{
      * Updates the status bar item with the current track info (title and artist)
      */
     public updateTrackInfo(){
+        console.log("Updating track info...")
         if(this.currentTrack){
             this.trackInfoText.text = this.currentTrack.title + " - " + this.currentTrack.artist;
             

@@ -6,6 +6,8 @@ import {Track, TrackPlayer} from "./trackplayer";
 const http = require("https");
 const fs = require("fs");
 
+const CLIENTID = "zjN6Z1mS1PxBHzuyh1ZNJ22GckQGx2xs";
+
 function displayConnectionError(err: string){
     vscode.window.showErrorMessage("unable to connect to soundcloud servers. Error message: \n" + err);
 }
@@ -19,7 +21,8 @@ export class SoundCloudRequest{
      * 
      */
     static queryTrack(query: string, callback: Function){
-        http.get("https://api-v2.soundcloud.com/search/queries?q=" + query + "&client_id=dmDh7QSlmGpzH9qQoH1YExYCGcyYeYYC&limit=5", (response: EventEmitter)=>{
+        // http.get("https://api-v2.soundcloud.com/search/queries?q=" + query + "&client_id=dmDh7QSlmGpzH9qQoH1YExYCGcyYeYYC&limit=5", (response: EventEmitter)=>{
+        http.get("https://api-v2.soundcloud.com/search/queries?q=".concat(query, "&client_id=", CLIENTID, "&limit=5"), (response: EventEmitter)=>{
             var data = '';
             response.on("data", (chunk)=>{
                 data += chunk;
@@ -42,7 +45,7 @@ export class SoundCloudRequest{
      */
 
     static getTrackFromQuery(query: string, callback: Function){
-        http.get("https://api-v2.soundcloud.com/search?q=" + query + "&query_urn=soundcloud%3Asearch-autocomplete%3A76a40be97b81410c8631f4b5755df845&facet=model&client_id=dmDh7QSlmGpzH9qQoH1YExYCGcyYeYYC&limit=30", (response: EventEmitter)=>{
+        http.get("https://api-v2.soundcloud.com/search?q=".concat(query, "&query_urn=soundcloud%3Asearch-autocomplete%3A76a40be97b81410c8631f4b5755df845&facet=model", "&client_id=", CLIENTID, "&limit=30"), (response: EventEmitter)=>{     
             var data = '';
             response.on("data", (chunk)=>{
                 data += chunk;
@@ -60,6 +63,7 @@ export class SoundCloudRequest{
                         }
                         track.trackID = jsonObj.collection[i].id;
                         track.streamURL = jsonObj.collection[i].media.transcodings[0].url; //ocasional error around here. hello by pop smoke/a boogie causes this error. if anyone find other songs please let me know -owen
+                        track.length = Math.floor(jsonObj.collection[i].duration / 1000);
                         trackArr.push(track);
                     }catch(err){
                         console.log(err);
@@ -80,7 +84,7 @@ export class SoundCloudRequest{
      */
     static downloadTrack(track: Track, callback: Function){
         //get the randomly generated track stream url
-        this.getStreamURL(track.streamURL+"?client_id=dmDh7QSlmGpzH9qQoH1YExYCGcyYeYYC", (url: string)=>{
+        this.getStreamURL(track.streamURL.concat("?client_id=", CLIENTID), (url: string)=>{
             //http get track mu3 constaining mp3 links
             http.get(url, (response: EventEmitter)=>{
                 var data = '';
