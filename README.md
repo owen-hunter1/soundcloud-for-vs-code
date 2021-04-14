@@ -54,7 +54,7 @@
 
 1. Install Python and pip
 2. `pip3 install numpy`
-3. `pip3 install ploty`
+3. `pip3 install plotly`
 
 ### Generation
 

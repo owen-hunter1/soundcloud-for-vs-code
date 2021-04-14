@@ -5,8 +5,8 @@ import {TrackPlayer, Track} from "../../trackplayer";
 import {SoundCloudRequest} from "../../soundcloud_request";
 import * as ext from '../../extension';
 
-const testNames = ["timer_tick", "track_creation", "track_queue", "query_track",
-"get_track_from_query", "play_with_sample_track", "play_pause_with_no_track",
+const testNames = ["timer_tick", "timer_starting_with_0_seconds_remaining", "track_creation", 
+"track_queue", "query_track", "get_track_from_query", "play_with_sample_track", "play_pause_with_no_track",
 "new_status_bar_item", "skip_to_next_track", "skip_with_no_next_track"];
 
 suite('Extension Test Suite', () => {
@@ -16,9 +16,17 @@ suite('Extension Test Suite', () => {
 		const timer = new Timer();
 		timer.setCurrentTime(0, 10);
 		assert.equal(timer.getTimeRemaining(), 10);
-
 		timer.startTimer();
 		setTimeout(() => { assert.equal(timer.getTimeRemaining(), 9); }, 1100);
+		timer.stopTimer();	
+	});
+
+	test("timer_starting_with_0_seconds_remaining", () => {
+		const timer = new Timer();
+		timer.setCurrentTime(0, 0);
+		assert.equal(timer.getTimeRemaining(), 0);
+		timer.startTimer();
+		setTimeout(() => { assert.equal(timer.getTimeRemaining(), 0); }, 1100);
 		timer.stopTimer();	
 	});
 
