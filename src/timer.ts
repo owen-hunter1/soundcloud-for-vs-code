@@ -1,3 +1,4 @@
+import { time } from 'node:console';
 import * as vscode from 'vscode';
 import { newStatusBarItem } from "./extension";
 
@@ -94,6 +95,10 @@ export class Timer{
         }
 
         this.timerText.text = curTimeDisplay + " / " + totalTimeDisplay;
+    }
+
+    public getTimeRemaining(): number {
+        return this.timeRemaining;
     }
     
 }

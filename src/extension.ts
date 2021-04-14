@@ -147,16 +147,16 @@ export function activate(context: vscode.ExtensionContext) {
 
 	context.subscriptions.push(vscode.commands.registerCommand("soundcloud-for-vs-code.skip_next", ()=>{
 		trackplayer.skipNext();
-		if(trackplayer.play()){
-			playButton.text = "$(debug-pause)";
-			playButton.tooltip = "skip next";
-		}
+		// if(trackplayer.play()){
+		// 	playButton.text = "$(debug-pause)";
+		// 	playButton.tooltip = "skip next";
+		// }
 	}));
 
 	context.subscriptions.push(vscode.commands.registerCommand("soundcloud-for-vs-code.skip_back", ()=>{
 		trackplayer.skipBack();
-		playButton.text = "$(debug-pause)";
-		playButton.tooltip = "skip back";
+		// playButton.text = "$(debug-pause)";
+		// playButton.tooltip = "skip back";
 	}));
 
 	context.subscriptions.push(vscode.commands.registerCommand("soundcloud-for-vs-code.show_queue_menu", ()=>{

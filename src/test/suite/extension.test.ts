@@ -13,13 +13,13 @@ suite('Extension Test Suite', () => {
 	vscode.window.showInformationMessage('Start all tests.');
 
 	test("timer_tick", () => {
-		// const time = new Timer();
-		// let result = time.tick().time1;
-		// let start = new Date().getTime();
-		// let time2 = (new Date().getTime() - start);
-		
-		// assert.equal(result,time2);
-		assert.equal(1, 1);
+		const timer = new Timer();
+		timer.setCurrentTime(0, 10);
+		assert.equal(timer.getTimeRemaining(), 10);
+
+		timer.startTimer();
+		setTimeout(() => { assert.equal(timer.getTimeRemaining(), 9); }, 1100);
+		timer.stopTimer();	
 	});
 
 	test("track_creation", () => {
@@ -113,14 +113,6 @@ suite('Extension Test Suite', () => {
 
 	test("skip_with_no_next_track", () => {
 		let myTrackPlayer = new TrackPlayer;
-		const sampleTrack = new Track("Circles", "Post Malone", "", "672849185",
-		"https://api-v2.soundcloud.com/media/soundcloud:tracks:672849185/335d3cd1-701f-4b8d-a180-4a409326d87a/stream/hls");
-		myTrackPlayer.addToQueue(sampleTrack);
-
-		// This will put the first item in the queue as the currently playing 
-		// track without downloading it or playing it.
-		myTrackPlayer.skipNext();
-
 		assert.equal(myTrackPlayer.skipNext(), false);
 	});
 });

@@ -98,10 +98,6 @@ export class TrackPlayer{
                         this.player = new audic("music.mp3");
                         this.currentTrack = this.queue[0];
                         this.updateTrackInfo();
-                        // console.log("currentTime then durration");
-                        // console.log(this.player.currentTime);
-                        // console.log(this.player.durration);
-                        // console.log(this.queue[0].length);
                         this.timer.setCurrentTime(this.player.currentTime, this.currentTrack.length);
                         this.queue.shift();
                         this.player.play();
@@ -147,6 +143,7 @@ export class TrackPlayer{
         if(this.queue.length > 0){
             this.pause();
             this.currentTrack = null;
+            this.play();
             return true;
         }
         return false;
