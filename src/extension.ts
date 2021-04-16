@@ -161,7 +161,13 @@ export function activate(context: vscode.ExtensionContext) {
 
 	context.subscriptions.push(vscode.commands.registerCommand("soundcloud-for-vs-code.show_queue_menu", ()=>{
 		//todo: add queue functionality from queue class
-		vscode.window.showInformationMessage("Queue List");
+		var str = trackplayer.getQueue();
+		let i = 0;
+		for(i = 0; i < str.length; i++){
+			vscode.window.showInformationMessage(str[i].title + " ( Number in Queue " + i +  " )");
+				
+	
+		}
 	}));
 
 	context.subscriptions.push(vscode.commands.registerCommand("soundcloud-for-vs-code.show_search_menu", ()=>{
