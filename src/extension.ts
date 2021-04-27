@@ -174,9 +174,7 @@ export function activate(context: vscode.ExtensionContext) {
 
 		queueBox.onDidAccept(() => {
 			// Remove the item from the queue
-			console.log(queueBox.selectedItems[0].label[0]);
 			trackplayer.removeFromQueue(+(queueBox.selectedItems[0].label[0]) - 1);
-			console.log(trackplayer.getQueue());
 			queueBox.hide();
 		});
 

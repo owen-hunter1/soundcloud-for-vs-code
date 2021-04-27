@@ -157,6 +157,7 @@ export class TrackPlayer{
     public skipBack(): boolean{
         if(this.currentTrack !== null){
             this.player.pause();
+            // this.player.destroy();
             this.player = new audic("music.mp3");
             this.player.play();
             this.timer.setCurrentTime(0, this.currentTrack.length);
