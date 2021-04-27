@@ -80,23 +80,23 @@ export function activate(context: vscode.ExtensionContext) {
 	let itemPosition = 0;
 
 	//window item inititalizations
-	const searchButton: vscode.StatusBarItem = newStatusBarItem(vscode.StatusBarAlignment.Right, --itemPosition, "$(search-view-icon)", "search for songs", "soundcloud-for-vs-code.show_search_menu");
+	const searchButton: vscode.StatusBarItem = newStatusBarItem(vscode.StatusBarAlignment.Right, --itemPosition, "$(search-view-icon)", "Search", "soundcloud-for-vs-code.show_search_menu");
 	searchButton.show();
 	context.subscriptions.push(searchButton);
 
-	const replayButton: vscode.StatusBarItem = newStatusBarItem(vscode.StatusBarAlignment.Right, --itemPosition, "$(debug-reverse-continue)", "skip back", "soundcloud-for-vs-code.skip_back");
+	const replayButton: vscode.StatusBarItem = newStatusBarItem(vscode.StatusBarAlignment.Right, --itemPosition, "$(debug-reverse-continue)", "Skip back", "soundcloud-for-vs-code.skip_back");
 	replayButton.show();
 	context.subscriptions.push(replayButton);
 
-	const playButton: vscode.StatusBarItem = newStatusBarItem(vscode.StatusBarAlignment.Right, --itemPosition, "$(debug-start)", "play", "soundcloud-for-vs-code.play_pause_toggle");
+	const playButton: vscode.StatusBarItem = newStatusBarItem(vscode.StatusBarAlignment.Right, --itemPosition, "$(debug-start)", "Play", "soundcloud-for-vs-code.play_pause_toggle");
 	playButton.show();
 	context.subscriptions.push(playButton);
 
-	const skipButton: vscode.StatusBarItem = newStatusBarItem(vscode.StatusBarAlignment.Right, --itemPosition, "$(debug-continue)", "skip next", "soundcloud-for-vs-code.skip_next");
+	const skipButton: vscode.StatusBarItem = newStatusBarItem(vscode.StatusBarAlignment.Right, --itemPosition, "$(debug-continue)", "Skip next", "soundcloud-for-vs-code.skip_next");
 	skipButton.show();
 	context.subscriptions.push(skipButton);
 
-	const queueButton: vscode.StatusBarItem = newStatusBarItem(vscode.StatusBarAlignment.Right, --itemPosition, "$(list-ordered)", "queue", "soundcloud-for-vs-code.show_queue_menu");
+	const queueButton: vscode.StatusBarItem = newStatusBarItem(vscode.StatusBarAlignment.Right, --itemPosition, "$(list-ordered)", "Queue", "soundcloud-for-vs-code.show_queue_menu");
 	queueButton.show();
 	context.subscriptions.push(queueButton);
 
@@ -147,16 +147,14 @@ export function activate(context: vscode.ExtensionContext) {
 
 	context.subscriptions.push(vscode.commands.registerCommand("soundcloud-for-vs-code.skip_next", ()=>{
 		trackplayer.skipNext();
-		// if(trackplayer.play()){
-		// 	playButton.text = "$(debug-pause)";
-		// 	playButton.tooltip = "skip next";
-		// }
+		playButton.text = "$(debug-pause)";
+		playButton.tooltip = "Play";
 	}));
 
 	context.subscriptions.push(vscode.commands.registerCommand("soundcloud-for-vs-code.skip_back", ()=>{
 		trackplayer.skipBack();
-		// playButton.text = "$(debug-pause)";
-		// playButton.tooltip = "skip back";
+		playButton.text = "$(debug-pause)";
+		playButton.tooltip = "Skip back";
 	}));
 
 	context.subscriptions.push(vscode.commands.registerCommand("soundcloud-for-vs-code.show_queue_menu", ()=>{

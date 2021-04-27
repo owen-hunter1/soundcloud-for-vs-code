@@ -144,6 +144,7 @@ export class TrackPlayer{
             this.pause();
             this.currentTrack = null;
             this.play();
+            this.pause();
             return true;
         }
         return false;

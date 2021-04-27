@@ -6,24 +6,18 @@
 
 <details><summary>Search for a track</summary>
 
-![](https://i.imgur.com/eyZbYyW.gif)
+![](https://i.imgur.com/FeW0HBK.gif)
 </details>
-<details><summary>Play, pause, skip, and reverse track</summary>
+<details><summary>Play, pause, skip to next, and rewind track</summary>
 
-![](https://i.imgur.com/DbuZzeQ.png)
+![](https://i.imgur.com/ZNoAH0W.gif)
 </details>
-<details><summary>Add tracks to the queue</summary>
+<details><summary>Add and remove tracks to the queue</summary>
 
-![](https://i.imgur.com/uKIbDJl.gif)
+![](https://i.imgur.com/9aZdCnO.gif)
 </details>
 
 <br>
-
-### Features Coming Soon
- - View tracks in the queue
- - Reorder the queue
- - Search for entire playlists
-
 
 ## Requirements
 
