@@ -103,7 +103,7 @@ export function activate(context: vscode.ExtensionContext) {
 	//quick pick
 	const searchBox:vscode.QuickPick<vscode.QuickPickItem> = vscode.window.createQuickPick();
 	searchBox.ignoreFocusOut = true;
-	searchBox.placeholder = "search";
+	searchBox.placeholder = "Search for a track.";
 	searchBox.onDidAccept(()=>{
 		searchBox.hide();
 		//vscode.window.showInformationMessage(searchBox.selectedItems[0].label);
@@ -114,7 +114,7 @@ export function activate(context: vscode.ExtensionContext) {
 						trackplayer.addToQueue(value.track);
 						if(trackplayer.play()){
 							playButton.text = "$(debug-pause)";
-							playButton.tooltip = "pause";
+							playButton.tooltip = "Pause";
 						}
 					}
 				});
@@ -136,11 +136,11 @@ export function activate(context: vscode.ExtensionContext) {
 	context.subscriptions.push(vscode.commands.registerCommand("soundcloud-for-vs-code.play_pause_toggle", ()=>{
 		if(trackplayer.play()){
 			playButton.text = "$(debug-pause)";
-			playButton.tooltip = "pause";
+			playButton.tooltip = "Pause";
 		}
 		else{
 			playButton.text = "$(debug-start)";
-			playButton.tooltip = "play";
+			playButton.tooltip = "Play";
 			trackplayer.pause();
 		}
 	}));
@@ -160,14 +160,28 @@ export function activate(context: vscode.ExtensionContext) {
 	}));
 
 	context.subscriptions.push(vscode.commands.registerCommand("soundcloud-for-vs-code.show_queue_menu", ()=>{
-		//todo: add queue functionality from queue class
-		var str = trackplayer.getQueue();
-		let i = 0;
-		for(i = 0; i < str.length; i++){
-			vscode.window.showInformationMessage(str[i].title + " ( Number in Queue " + i +  " )");
-				
-	
+		const queueBox: vscode.QuickPick<vscode.QuickPickItem> = vscode.window.createQuickPick();
+		queueBox.title = "Queue"
+		queueBox.placeholder = "Select an item to remove from the queue.";
+		var queue = trackplayer.getQueue();
+		
+		let qpiArr: Array<vscode.QuickPickItem> = [];
+		for(var i = 0; i < queue.length; i++){
+			const str = (i + 1).toString().concat(". ", queue[i].title, " - ", queue[i].artist);
+			qpiArr.push({label:str});
 		}
+		queueBox.items = qpiArr;
+
+		queueBox.onDidAccept(() => {
+			// Remove the item from the queue
+			console.log(queueBox.selectedItems[0].label[0]);
+			trackplayer.removeFromQueue(+(queueBox.selectedItems[0].label[0]) - 1);
+			console.log(trackplayer.getQueue());
+			queueBox.hide();
+		});
+
+
+		queueBox.show();
 	}));
 
 	context.subscriptions.push(vscode.commands.registerCommand("soundcloud-for-vs-code.show_search_menu", ()=>{

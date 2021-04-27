@@ -9,8 +9,8 @@ export class Track{
     public title: string;
     public artist: string;
     public album: string;
-    public trackID: string;  // change to uuid
-    public streamURL: string;  // change to URL
+    public trackID: string; 
+    public streamURL: string; 
     public length: number;  // seconds
     constructor(title?: string, artist?: string, album?: string, trackID?: string, streamURL?: string, length?: number){
         title ? this.title = title : this.title = "";
@@ -60,7 +60,7 @@ export class TrackPlayer{
      * @param i index of queue item to remove 
      */
     public removeFromQueue(i: number){
-        if(this.queue.length > 0){
+        if(this.queue.length > 0 && i > -1){
             this.queue.splice(i, 1);
         }
     }
@@ -159,6 +159,7 @@ export class TrackPlayer{
             this.player.pause();
             this.player = new audic("music.mp3");
             this.player.play();
+            this.timer.setCurrentTime(0, this.currentTrack.length);
             // this.updateTrackInfo();
             return true;
         }
